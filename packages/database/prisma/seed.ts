@@ -22,25 +22,22 @@ const defaultCategories: Array<{
 ];
 
 async function main() {
-  let created = 0;
-  let skipped = 0;
-
   for (const cat of defaultCategories) {
-    const existing = await prisma.category.findFirst({
-      where: { name: cat.name, type: cat.type, userId: null },
+    await prisma.category.upsert({
+      where: {
+        name_type_userId: {
+          name: cat.name,
+          type: cat.type,
+          userId: null,
+        },
+      },
+      create: { ...cat, userId: null },
+      update: { icon: cat.icon },
     });
-
-    if (existing) {
-      skipped++;
-      continue;
-    }
-
-    await prisma.category.create({ data: { ...cat, userId: null } });
-    created++;
   }
 
   console.log(
-    `Seed default categories — created: ${created}, skipped (already exist): ${skipped}`,
+    `Seeded ${defaultCategories.length} default categories (idempotent).`,
   );
 }
 

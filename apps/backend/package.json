@@ -1,5 +1,5 @@
 {
-  "name": "@finance-tracker/backend",
+  "name": "backend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,11 +8,12 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@finance-tracker/database": "workspace:*",
-    "@finance-tracker/shared": "workspace:*",
+    "database": "workspace:*",
+    "shared": "workspace:*",
     "@nestjs/common": "^11.0.0",
     "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.0",

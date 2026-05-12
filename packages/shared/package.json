@@ -1,5 +1,5 @@
 {
-  "name": "@finance-tracker/shared",
+  "name": "shared",
   "version": "0.1.0",
   "private": true,
   "main": "./dist/index.js",
@@ -15,6 +15,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsc -p tsconfig.json --watch",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "clean": "rimraf dist"
   },
   "devDependencies": {

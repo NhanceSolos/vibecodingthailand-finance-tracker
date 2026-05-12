@@ -1,5 +1,5 @@
 {
-  "name": "@finance-tracker/database",
+  "name": "database",
   "version": "0.1.0",
   "private": true,
   "main": "./dist/index.js",
@@ -15,10 +15,12 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsc -p tsconfig.json --watch",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "clean": "rimraf dist",
     "prisma:generate": "prisma generate --schema=./prisma/schema.prisma",
     "prisma:migrate": "dotenv -e ../../.env -- prisma migrate dev --schema=./prisma/schema.prisma",
     "prisma:deploy": "dotenv -e ../../.env -- prisma migrate deploy --schema=./prisma/schema.prisma",
+    "prisma:reset": "dotenv -e ../../.env -- prisma migrate reset --force --schema=./prisma/schema.prisma",
     "prisma:studio": "dotenv -e ../../.env -- prisma studio --schema=./prisma/schema.prisma",
     "prisma:seed": "dotenv -e ../../.env -- prisma db seed --schema=./prisma/schema.prisma",
     "postinstall": "prisma generate --schema=./prisma/schema.prisma || true"

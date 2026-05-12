@@ -46,6 +46,9 @@ model Category {
 
   transactions Transaction[]
 
+  // Compound unique lets seed re-run via upsert without duplicating defaults
+  // and prevents a single user from creating two categories with the same (name, type).
+  @@unique([name, type, userId])
   @@index([userId])
 }
 

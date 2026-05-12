@@ -1,0 +1,70 @@
+// Prisma schema for Personal Finance Tracker
+// DATABASE_URL is loaded from the monorepo root .env via dotenv-cli in package.json scripts.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum TransactionSource {
+  WEB
+  LINE
+}
+
+model User {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  password   String
+  name       String
+  lineUserId String?  @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  transactions Transaction[]
+  categories   Category[]
+}
+
+model Category {
+  id        String          @id @default(cuid())
+  name      String
+  icon      String
+  type      TransactionType
+  // null = seed default ใช้ร่วมกันทุกคน, มีค่า = หมวดที่ user สร้างเอง
+  userId    String?
+  user      User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  transactions Transaction[]
+
+  @@index([userId])
+}
+
+model Transaction {
+  id          String            @id @default(cuid())
+  amount      Decimal           @db.Decimal(12, 2)
+  type        TransactionType
+  description String?
+  source      TransactionSource @default(WEB)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([categoryId])
+}

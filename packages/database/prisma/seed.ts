@@ -1,6 +1,16 @@
-import { PrismaClient, TransactionType } from "@prisma/client";
+import path from "node:path";
+import dotenv from "dotenv";
 
-const prisma = new PrismaClient();
+// Allow `tsx prisma/seed.ts` directly; prisma CLI already loads .env via config.
+dotenv.config({ path: path.join(__dirname, "..", "..", "..", ".env") });
+
+import { PrismaClient, TransactionType } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+});
+const prisma = new PrismaClient({ adapter });
 
 const defaultCategories: Array<{
   name: string;
@@ -22,18 +32,22 @@ const defaultCategories: Array<{
 ];
 
 async function main() {
+  // Prisma 7 rejects null in compound-unique upsert keys, so do find-then-write.
+  // The @@unique on Category still protects user-scoped duplicates (userId not null).
   for (const cat of defaultCategories) {
-    await prisma.category.upsert({
-      where: {
-        name_type_userId: {
-          name: cat.name,
-          type: cat.type,
-          userId: null,
-        },
-      },
-      create: { ...cat, userId: null },
-      update: { icon: cat.icon },
+    const existing = await prisma.category.findFirst({
+      where: { name: cat.name, type: cat.type, userId: null },
     });
+    if (existing) {
+      await prisma.category.update({
+        where: { id: existing.id },
+        data: { icon: cat.icon },
+      });
+    } else {
+      await prisma.category.create({
+        data: { ...cat, userId: null },
+      });
+    }
   }
 
   console.log(

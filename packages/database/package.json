@@ -17,22 +17,22 @@
     "dev": "tsc -p tsconfig.json --watch",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "clean": "rimraf dist",
-    "prisma:generate": "prisma generate --schema=./prisma/schema.prisma",
-    "prisma:migrate": "dotenv -e ../../.env -- prisma migrate dev --schema=./prisma/schema.prisma",
-    "prisma:deploy": "dotenv -e ../../.env -- prisma migrate deploy --schema=./prisma/schema.prisma",
-    "prisma:reset": "dotenv -e ../../.env -- prisma migrate reset --force --schema=./prisma/schema.prisma",
-    "prisma:studio": "dotenv -e ../../.env -- prisma studio --schema=./prisma/schema.prisma",
-    "prisma:seed": "dotenv -e ../../.env -- prisma db seed --schema=./prisma/schema.prisma",
-    "postinstall": "prisma generate --schema=./prisma/schema.prisma || true"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:reset": "prisma migrate reset --force",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "prisma db seed",
+    "postinstall": "prisma generate || true"
   },
   "dependencies": {
-    "@prisma/client": "^7.0.0"
+    "@prisma/adapter-pg": "^7.0.0",
+    "@prisma/client": "^7.0.0",
+    "pg": "^8.13.0"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.4.2",
+    "@types/pg": "^8.11.10",
+    "dotenv": "^16.4.5",
     "prisma": "^7.0.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.2",

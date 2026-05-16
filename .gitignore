@@ -12,6 +12,9 @@ build/
 .env.local
 .env.*.local
 
+# CLAUDE
+CLAUDE.local.md
+
 # Prisma
 .prisma/
 packages/database/prisma/migrations/dev.db*

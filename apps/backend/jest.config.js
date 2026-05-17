@@ -10,6 +10,6 @@ module.exports = {
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
   moduleNameMapper: {
-    '^shared$': '<rootDir>/../../node_modules/shared/dist/index.js',
+    '^shared$': require.resolve('shared'),
   },
 };

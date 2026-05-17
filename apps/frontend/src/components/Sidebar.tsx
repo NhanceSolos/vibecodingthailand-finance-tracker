@@ -1,28 +1,31 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const navItems = [
-  { to: "/", label: "Dashboard", end: true },
-  { to: "/transactions", label: "Transactions", end: false },
+  { to: "/dashboard", label: "ภาพรวม" },
+  { to: "/transactions", label: "รายการ" },
 ];
 
 export default function Sidebar() {
+  const { user, logout } = useAuth();
+
   return (
-    <aside className="w-60 shrink-0 border-r border-gray-200 bg-white">
-      <div className="px-6 py-5 border-b border-gray-200">
-        <h2 className="text-lg font-semibold">Finance Tracker</h2>
+    <aside className="w-56 shrink-0 border-r border-zinc-800 bg-zinc-900 flex flex-col">
+      <div className="px-5 py-4 border-b border-zinc-800">
+        <h2 className="text-base font-bold text-zinc-100 font-[Kanit]">Finance Tracker</h2>
+        {user && <p className="text-xs text-zinc-500 mt-0.5 truncate">{user.email}</p>}
       </div>
-      <nav className="p-3 space-y-1">
+      <nav className="p-3 space-y-1 flex-1">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.end}
             className={({ isActive }) =>
               [
-                "block rounded-md px-3 py-2 text-sm",
+                "block rounded-lg px-3 py-2 text-sm transition",
                 isActive
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-700 hover:bg-gray-100",
+                  ? "bg-zinc-800 text-zinc-100 font-medium"
+                  : "text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200",
               ].join(" ")
             }
           >
@@ -30,6 +33,14 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
+      <div className="p-3 border-t border-zinc-800">
+        <button
+          onClick={logout}
+          className="w-full text-left px-3 py-2 text-sm text-zinc-500 hover:text-zinc-300 rounded-lg hover:bg-zinc-800/50 transition"
+        >
+          ออกจากระบบ
+        </button>
+      </div>
     </aside>
   );
 }

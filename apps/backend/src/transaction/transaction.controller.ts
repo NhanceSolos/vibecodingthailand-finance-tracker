@@ -17,7 +17,8 @@ import {
   GetTransactionsQueryDto,
   UpdateTransactionDto,
 } from 'shared';
-import { CurrentUser, JwtUser } from '../auth/decorators/current-user.decorator';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import type { JwtUser } from '../auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { TransactionService } from './transaction.service';
 

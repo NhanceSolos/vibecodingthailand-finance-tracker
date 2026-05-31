@@ -10,6 +10,10 @@ export { UpdateCategoryDto } from './category/update-category.dto';
 export { GetCategoriesQueryDto } from './category/get-categories-query.dto';
 export type { CategoryResponse } from './category/category-response.interface';
 
+export { CreateRecurringDto } from './recurring/create-recurring.dto';
+export { UpdateRecurringDto } from './recurring/update-recurring.dto';
+export type { RecurringCategoryInfo, RecurringResponse } from './recurring/recurring-response.interface';
+
 export { CreateTransactionDto } from './transaction/create-transaction.dto';
 export { UpdateTransactionDto } from './transaction/update-transaction.dto';
 export { GetTransactionsQueryDto } from './transaction/get-transactions-query.dto';

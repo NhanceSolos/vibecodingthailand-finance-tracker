@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 const navItems = [
   { to: "/dashboard", label: "ภาพรวม" },
   { to: "/transactions", label: "รายการ" },
+  { to: "/recurring", label: "รายการประจำ" },
   { to: "/categories", label: "หมวดหมู่" },
 ];
 

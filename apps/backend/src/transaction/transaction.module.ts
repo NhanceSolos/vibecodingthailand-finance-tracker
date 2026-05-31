@@ -9,5 +9,6 @@ import { TransactionService } from './transaction.service';
   imports: [AuthModule, CategoryModule],
   controllers: [TransactionController],
   providers: [TransactionService, TransactionRepository],
+  exports: [TransactionRepository],
 })
 export class TransactionModule {}

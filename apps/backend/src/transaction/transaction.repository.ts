@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { TransactionType } from 'shared';
+import { TransactionSource, TransactionType } from 'shared';
 import { PrismaService } from '../prisma/prisma.service';
 
 const CATEGORY_SELECT = { id: true, name: true, icon: true } as const;
@@ -23,6 +23,7 @@ export class TransactionRepository {
     description?: string;
     categoryId: string;
     userId: string;
+    source?: TransactionSource;
   }) {
     return this.prisma.transaction.create({
       data,
